@@ -1,0 +1,28 @@
+pipeline{
+    agent any
+    stages{
+       stage('Build container'){
+        steps{
+            bat 'docker build -t fastapiapp:v1 .'
+        }
+       }
+       stage('Load Image into MiniKube'){
+        steps{
+             bat 'minikube image load fastapiapp:v1'
+        }
+       }
+       stage('Deploy image to Kubernities'){
+        steps{
+            bat 'kubectl apply -f deployment.yaml'
+            bat 'kubectl apply -f service.yaml'
+        }
+       }
+       stage('Verify Deployment'){
+        steps{
+            bat 'kubectl get pods'
+            bat 'kubectl get svc'
+        }
+       }
+       
+    }
+}
