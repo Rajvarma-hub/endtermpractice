@@ -5,7 +5,7 @@ pipeline {
 
         stage('Build container') {
             steps {
-                sh 'docker build -t fastapiapp:v1 .'
+                sh 'cd fasapi && docker build -t fastapiapp:v1 .'
             }
         }
 
